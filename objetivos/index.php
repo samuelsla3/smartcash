@@ -1,6 +1,101 @@
 <?php
-require_once __DIR__.'/../config/database.php';require_once __DIR__.'/../includes/auth.php';require_once __DIR__.'/../includes/functions.php';$uid=usuarioLogado();
-$stmt=db()->prepare('SELECT *,CASE WHEN valor_objetivo>0 THEN LEAST(100,(valor_atual/valor_objetivo)*100) ELSE 0 END progresso FROM OBJETIVO_FINANCEIRO WHERE id_usuario=:u ORDER BY data_limite IS NULL,data_limite');$stmt->execute(['u'=>$uid]);$items=$stmt->fetchAll(PDO::FETCH_ASSOC);
-$pageTitle='Objetivos financeiros';$basePath='../';require __DIR__.'/../includes/header.php';?>
-<div class="page-header"><div><h1>Objetivos financeiros</h1><p class="muted">Acompanhe o progresso das suas metas.</p></div><a class="btn" href="cadastrar.php">Novo objetivo</a></div>
-<div class="grid grid-2"><?php if(!$items):?><div class="card empty">Nenhum objetivo cadastrado.</div><?php else: foreach($items as $o):?><div class="card"><div class="page-header" style="margin-bottom:12px"><div><h2 style="margin:0;font-size:1.1rem"><?=e($o['descricao'])?></h2><span class="badge"><?=e($o['status'])?></span></div><div class="actions"><a class="btn btn-small btn-secondary" href="editar.php?id=<?=$o['id_objetivo']?>">Editar</a><form method="post" action="excluir.php" data-confirm="Excluir este objetivo?"><input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>"><input type="hidden" name="id" value="<?=$o['id_objetivo']?>"><button class="btn btn-small btn-danger">Excluir</button></form></div></div><div class="progress"><div class="progress-bar" style="width:<?=min(100,max(0,(float)$o['progresso']))?>%"></div></div><p><strong><?=number_format((float)$o['progresso'],1,',','.')?>%</strong> — <?=money($o['valor_atual'])?> / <?=money($o['valor_objetivo'])?></p><small class="muted">Limite: <?=formatDateBr($o['data_limite'])?></small></div><?php endforeach;endif;?></div><?php require __DIR__.'/../includes/footer.php';?>
+require_once __DIR__.'/../config/database.php';
+require_once __DIR__.'/../includes/auth.php';
+require_once __DIR__.'/../includes/functions.php';
+
+$uid=usuarioLogado();
+
+$stmt=db()->prepare('SELECT *,CASE WHEN valor_objetivo>0 THEN LEAST(100,(valor_atual/valor_objetivo)*100) ELSE 0 END progresso FROM OBJETIVO_FINANCEIRO WHERE id_usuario=:u ORDER BY data_limite IS NULL,data_limite');
+$stmt->execute(['u'=>$uid]);
+$items=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$pageTitle='Objetivos financeiros';
+$basePath='../';
+
+require __DIR__.'/../includes/header.php';
+?>
+
+<div class="page-header">
+    <div>
+        <h1>Objetivos financeiros</h1>
+        <p class="muted">Acompanhe o progresso das suas metas.</p>
+    </div>
+
+    <a class="btn" href="cadastrar.php">Novo objetivo</a>
+</div>
+
+<div class="grid grid-2">
+    <?php if(!$items):?>
+        <div class="card empty">
+            Nenhum objetivo cadastrado.
+        </div>
+
+    <?php else: foreach($items as $o):?>
+        <div class="card">
+            <div class="page-header" style="margin-bottom:12px">
+                <div>
+                    <h2 style="margin:0;font-size:1.1rem">
+                        <?=e($o['descricao'])?>
+                    </h2>
+
+                    <span class="badge">
+                        <?=e($o['status'])?>
+                    </span>
+                </div>
+
+                <div class="actions">
+                    <a
+                        class="btn btn-small btn-secondary"
+                        href="editar.php?id=<?=$o['id_objetivo']?>"
+                    >
+                        Editar
+                    </a>
+
+                    <form
+                        method="post"
+                        action="excluir.php"
+                        data-confirm="Excluir este objetivo?"
+                    >
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="<?=e(csrfToken())?>"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="id"
+                            value="<?=$o['id_objetivo']?>"
+                        >
+
+                        <button class="btn btn-small btn-danger">
+                            Excluir
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="progress">
+                <div
+                    class="progress-bar"
+                    style="width:<?=min(100,max(0,(float)$o['progresso']))?>%"
+                ></div>
+            </div>
+
+            <p>
+                <strong>
+                    <?=number_format((float)$o['progresso'],1,',','.')?>%
+                </strong>
+                —
+                <?=money($o['valor_atual'])?> / <?=money($o['valor_objetivo'])?>
+            </p>
+
+            <small class="muted">
+                Limite: <?=formatDateBr($o['data_limite'])?>
+            </small>
+        </div>
+
+    <?php endforeach;endif;?>
+</div>
+
+<?php require __DIR__.'/../includes/footer.php';?>

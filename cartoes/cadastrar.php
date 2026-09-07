@@ -1,14 +1,155 @@
 <?php
-require_once __DIR__.'/../config/database.php';require_once __DIR__.'/../includes/auth.php';require_once __DIR__.'/../includes/functions.php';$uid=usuarioLogado();$errors=[];
+require_once __DIR__.'/../config/database.php';
+require_once __DIR__.'/../includes/auth.php';
+require_once __DIR__.'/../includes/functions.php';
+
+$uid=usuarioLogado();
+$errors=[];
+
 $bancos=db()->query('SELECT id_banco,nome FROM BANCO ORDER BY nome')->fetchAll(PDO::FETCH_ASSOC);
-$stmt=db()->prepare('SELECT id_conta,nome_conta FROM CONTA WHERE id_usuario=:id ORDER BY nome_conta');$stmt->execute(['id'=>$uid]);$contas=$stmt->fetchAll(PDO::FETCH_ASSOC);
-if($_SERVER['REQUEST_METHOD']==='POST'){verifyCsrf();$nome=trim((string)($_POST['nome_cartao']??''));$banco=intPost('id_banco');$conta=intPost('id_conta');$dia=filter_input(INPUT_POST,'dia_vencimento',FILTER_VALIDATE_INT);$limite=decimalPost('limite_total');$disp=decimalPost('limite_disponivel');
-if($nome==='')$errors[]='Informe o nome do cartão.';if(!$banco)$errors[]='Selecione o banco.';if(!$conta)$errors[]='Selecione a conta.';if(!$dia||$dia<1||$dia>31)$errors[]='Dia de vencimento inválido.';if($limite===null||$limite<0)$errors[]='Limite total inválido.';if($disp===null||$disp<0||($limite!==null&&$disp>$limite))$errors[]='Limite disponível inválido.';
-if(!$errors){$check=db()->prepare('SELECT id_conta FROM CONTA WHERE id_conta=:conta AND id_usuario=:id');$check->execute(['conta'=>$conta,'id'=>$uid]);if(!$check->fetch())$errors[]='Conta inválida.';}
-if(!$errors){$stmt=db()->prepare('INSERT INTO CARTAO (id_usuario,id_banco,id_conta,nome_cartao,dia_vencimento,limite_total,limite_disponivel) VALUES (:u,:b,:c,:n,:d,:l,:ld)');$stmt->execute(['u'=>$uid,'b'=>$banco,'c'=>$conta,'n'=>$nome,'d'=>$dia,'l'=>$limite,'ld'=>$disp]);flash('success','Cartão cadastrado.');redirect('index.php');}}
-$pageTitle='Novo cartão';$basePath='../';require __DIR__.'/../includes/header.php';?>
-<div class="page-header"><h1>Novo cartão</h1><a class="btn btn-secondary" href="index.php">Voltar</a></div><div class="form-card"><?php foreach($errors as $e1):?><div class="alert error"><?=e($e1)?></div><?php endforeach;?>
-<form method="post"><input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>">
-<div class="form-row"><div class="form-group"><label>Nome do cartão</label><input name="nome_cartao" required maxlength="100" value="<?=e($_POST['nome_cartao']??'')?>"></div><div class="form-group"><label>Banco</label><select name="id_banco" required><option value="">Selecione</option><?php foreach($bancos as $b):?><option value="<?=$b['id_banco']?>" <?=((int)($_POST['id_banco']??0)==$b['id_banco'])?'selected':''?>><?=e($b['nome'])?></option><?php endforeach;?></select></div></div>
-<div class="form-row"><div class="form-group"><label>Conta associada</label><select name="id_conta" required><option value="">Selecione</option><?php foreach($contas as $c):?><option value="<?=$c['id_conta']?>" <?=((int)($_POST['id_conta']??0)==$c['id_conta'])?'selected':''?>><?=e($c['nome_conta'])?></option><?php endforeach;?></select></div><div class="form-group"><label>Dia de vencimento</label><input type="number" min="1" max="31" name="dia_vencimento" required value="<?=e($_POST['dia_vencimento']??'')?>">
-</div></div><div class="form-row"><div class="form-group"><label>Limite total</label><input name="limite_total" inputmode="decimal" required value="<?=e($_POST['limite_total']??'')?>"></div><div class="form-group"><label>Limite disponível</label><input name="limite_disponivel" inputmode="decimal" required value="<?=e($_POST['limite_disponivel']??'')?>"></div></div><button class="btn">Salvar</button></form></div><?php require __DIR__.'/../includes/footer.php';?>
+
+$stmt=db()->prepare('SELECT id_conta,nome_conta FROM CONTA WHERE id_usuario=:id ORDER BY nome_conta');
+$stmt->execute(['id'=>$uid]);
+$contas=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if($_SERVER['REQUEST_METHOD']==='POST'){
+    verifyCsrf();
+    $nome=trim((string)($_POST['nome_cartao']??''));
+    $banco=intPost('id_banco');
+    $conta=intPost('id_conta');
+    $dia=filter_input(INPUT_POST,'dia_vencimento',FILTER_VALIDATE_INT);
+    $limite=decimalPost('limite_total');
+    $disp=decimalPost('limite_disponivel');
+
+    if($nome==='')$errors[]='Informe o nome do cartão.';
+    if(!$banco)$errors[]='Selecione o banco.';
+    if(!$conta)$errors[]='Selecione a conta.';
+    if(!$dia||$dia<1||$dia>31)$errors[]='Dia de vencimento inválido.';
+    if($limite===null||$limite<0)$errors[]='Limite total inválido.';
+    if($disp===null||$disp<0||($limite!==null&&$disp>$limite))$errors[]='Limite disponível inválido.';
+
+    if(!$errors){
+        $check=db()->prepare('SELECT id_conta FROM CONTA WHERE id_conta=:conta AND id_usuario=:id');
+        $check->execute(['conta'=>$conta,'id'=>$uid]);
+        if(!$check->fetch())$errors[]='Conta inválida.';
+    }
+
+    if(!$errors){
+        $stmt=db()->prepare('INSERT INTO CARTAO (id_usuario,id_banco,id_conta,nome_cartao,dia_vencimento,limite_total,limite_disponivel) VALUES (:u,:b,:c,:n,:d,:l,:ld)');
+        $stmt->execute([
+            'u'=>$uid,
+            'b'=>$banco,
+            'c'=>$conta,
+            'n'=>$nome,
+            'd'=>$dia,
+            'l'=>$limite,
+            'ld'=>$disp
+        ]);
+        flash('success','Cartão cadastrado.');
+        redirect('index.php');
+    }
+}
+
+$pageTitle='Novo cartão';
+$basePath='../';
+require __DIR__.'/../includes/header.php';
+?>
+
+<div class="page-header">
+    <h1>Novo cartão</h1>
+    <a class="btn btn-secondary" href="index.php">Voltar</a>
+</div>
+
+<div class="form-card">
+    <?php foreach($errors as $e1):?>
+        <div class="alert error"><?=e($e1)?></div>
+    <?php endforeach;?>
+
+    <form method="post">
+        <input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>">
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Nome do cartão</label>
+                <input
+                    name="nome_cartao"
+                    required
+                    maxlength="100"
+                    value="<?=e($_POST['nome_cartao']??'')?>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Banco</label>
+                <select name="id_banco" required>
+                    <option value="">Selecione</option>
+
+                    <?php foreach($bancos as $b):?>
+                        <option
+                            value="<?=$b['id_banco']?>"
+                            <?=((int)($_POST['id_banco']??0)==$b['id_banco'])?'selected':''?>
+                        >
+                            <?=e($b['nome'])?>
+                        </option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Conta associada</label>
+                <select name="id_conta" required>
+                    <option value="">Selecione</option>
+
+                    <?php foreach($contas as $c):?>
+                        <option
+                            value="<?=$c['id_conta']?>"
+                            <?=((int)($_POST['id_conta']??0)==$c['id_conta'])?'selected':''?>
+                        >
+                            <?=e($c['nome_conta'])?>
+                        </option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Dia de vencimento</label>
+                <input
+                    type="number"
+                    min="1"
+                    max="31"
+                    name="dia_vencimento"
+                    required
+                    value="<?=e($_POST['dia_vencimento']??'')?>"
+                >
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Limite total</label>
+                <input
+                    name="limite_total"
+                    inputmode="decimal"
+                    required
+                    value="<?=e($_POST['limite_total']??'')?>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Limite disponível</label>
+                <input
+                    name="limite_disponivel"
+                    inputmode="decimal"
+                    required
+                    value="<?=e($_POST['limite_disponivel']??'')?>"
+                >
+            </div>
+        </div>
+
+        <button class="btn">Salvar</button>
+    </form>
+</div>
+
+<?php require __DIR__.'/../includes/footer.php';?>

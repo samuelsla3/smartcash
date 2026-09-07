@@ -1,24 +1,11 @@
 <?php
 declare(strict_types=1);
 
-/**
- * SmartCash - Funções compartilhadas
- *
- * Compatível com:
- * - Núcleo financeiro
- * - Módulos complementares
- *
- * Dependência:
- * - config/database.php deve disponibilizar $pdo
- */
-
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-/* =========================================================
-   SAÍDA / HTML
-   ========================================================= */
+/* SAÍDA / HTML */
 
 function e(mixed $value): string
 {
@@ -30,9 +17,7 @@ function e(mixed $value): string
 }
 
 
-/* =========================================================
-   USUÁRIO / AUTENTICAÇÃO
-   ========================================================= */
+/* USUÁRIO / AUTENTICAÇÃO*/
 
 function usuarioLogado(): int
 {
@@ -40,9 +25,7 @@ function usuarioLogado(): int
 }
 
 
-/* =========================================================
-   BANCO DE DADOS
-   ========================================================= */
+/* BANCO DE DADOS*/
 
 function db(): PDO
 {
@@ -58,9 +41,7 @@ function db(): PDO
 }
 
 
-/* =========================================================
-   REDIRECIONAMENTO
-   ========================================================= */
+/* REDIRECIONAMENTO*/
 
 function redirect(string $url): never
 {
@@ -69,9 +50,7 @@ function redirect(string $url): never
 }
 
 
-/* =========================================================
-   MENSAGENS FLASH
-   ========================================================= */
+/* MENSAGENS FLASH*/
 
 function flash(string $type, string $message): void
 {
@@ -99,9 +78,7 @@ function get_flash(): ?array
 }
 
 
-/* =========================================================
-   CSRF
-   ========================================================= */
+/* CSRF*/
 
 function csrfToken(): string
 {
@@ -157,9 +134,7 @@ function verify_csrf(?string $token = null): void
 }
 
 
-/* =========================================================
-   VALORES MONETÁRIOS
-   ========================================================= */
+/* VALORES MONETÁRIOS*/
 
 function money(float|int|string|null $value): string
 {
@@ -172,14 +147,7 @@ function money(float|int|string|null $value): string
 }
 
 
-/**
- * Converte valor enviado por formulário para float.
- *
- * Aceita:
- * 1234.56
- * 1234,56
- * 1.234,56
- */
+
 function decimalPost(
     string $key,
     bool $allowZero = true
@@ -214,10 +182,7 @@ function decimalPost(
 }
 
 
-/*
- * Compatibilidade com o núcleo:
- * money_input()
- */
+
 function money_input(?string $value): ?float
 {
     if ($value === null) {
@@ -258,9 +223,7 @@ function positive_amount(?string $value): ?float
 }
 
 
-/* =========================================================
-   INTEIROS / IDs
-   ========================================================= */
+/* INTEIROS / IDs */
 
 function intPost(string $key): ?int
 {
@@ -275,9 +238,7 @@ function intPost(string $key): ?int
 }
 
 
-/* =========================================================
-   DATAS
-   ========================================================= */
+/* DATAS*/
 
 function datePost(string $key): ?string
 {
@@ -339,9 +300,7 @@ function formatDateBr(?string $date): string
 }
 
 
-/* =========================================================
-   RECORRÊNCIA
-   ========================================================= */
+/* RECORRÊNCIA */
 
 function recurring_data(
     bool $recorrente,
@@ -382,9 +341,7 @@ function recurring_data(
 }
 
 
-/* =========================================================
-   CATEGORIAS
-   ========================================================= */
+/* CATEGORIAS*/
 
 /**
  * Monta árvore hierárquica das categorias.
@@ -500,9 +457,7 @@ function getAllCategories(): array
 }
 
 
-/* =========================================================
-   RESPOSTAS JSON
-   ========================================================= */
+/* RESPOSTAS JSON*/
 
 function jsonResponse(
     array $data,

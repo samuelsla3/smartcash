@@ -1,10 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/*
- * Conexão MySQL para Laragon.
- * Se o seu MySQL tiver senha, altere $password.
- */
 $host = '127.0.0.1';
 $dbname = 'smartcash';
 $user = 'root';
