@@ -1,0 +1,468 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+a {
+    color: #166534;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.topbar {
+    min-height: 64px;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.brand {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #166534;
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.nav a,
+.user-menu a {
+    color: #374151;
+    text-decoration: none;
+    font-size: .92rem;
+}
+
+.nav a:hover,
+.user-menu a:hover {
+    color: #166534;
+}
+
+.user-menu {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* =========================
+   CONTEÚDO
+   ========================= */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 20px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.page-header h1 {
+    margin: 0;
+}
+
+/* =========================
+   CARDS
+   ========================= */
+
+.card,
+.table-card,
+.form-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, .04);
+}
+
+/* =========================
+   GRID
+   ========================= */
+
+.grid {
+    display: grid;
+    gap: 18px;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* =========================
+   BOTÕES
+   ========================= */
+
+.btn,
+.button,
+button {
+    display: inline-block;
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 15px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    background: #166534;
+    color: #fff;
+    font: inherit;
+}
+
+.btn:hover,
+.button:hover,
+button:hover {
+    filter: brightness(.94);
+    text-decoration: none;
+}
+
+.btn-secondary,
+.secondary {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.btn-danger,
+.danger {
+    background: #b91c1c;
+    color: #fff;
+}
+
+.btn-small {
+    padding: 7px 10px;
+    font-size: .85rem;
+}
+
+/* =========================
+   AÇÕES
+   ========================= */
+
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+/* =========================
+   FORMULÁRIOS NOVOS
+   ========================= */
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    font: inherit;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+/* =========================
+   FORMULÁRIOS DO NÚCLEO
+   ========================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field label {
+    font-weight: 600;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    font: inherit;
+}
+
+.field textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.checkbox {
+    flex-direction: row;
+    align-items: center;
+}
+
+.checkbox input {
+    width: auto;
+}
+
+/* =========================
+   FORMULÁRIO INLINE
+   ========================= */
+
+.inline-form {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+}
+
+/* =========================
+   TABELAS
+   ========================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+}
+
+th {
+    font-size: .85rem;
+    color: #6b7280;
+    background: #f9fafb;
+}
+
+/* =========================
+   ALERTAS
+   ========================= */
+
+.alert {
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+
+.alert.success,
+.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.alert.error,
+.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.alert.warning,
+.warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* =========================
+   TEXTOS E INDICADORES
+   ========================= */
+
+.empty {
+    padding: 24px;
+    text-align: center;
+    color: #6b7280;
+}
+
+.muted {
+    color: #6b7280;
+}
+
+.positive {
+    color: #15803d;
+}
+
+.negative {
+    color: #b91c1c;
+}
+
+/* =========================
+   PROGRESSO
+   ========================= */
+
+.progress {
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #166534;
+}
+
+/* =========================
+   BADGES
+   ========================= */
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #e5e7eb;
+    font-size: .78rem;
+}
+
+.badge-success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+.footer {
+    text-align: center;
+    padding: 28px;
+    color: #6b7280;
+    font-size: .85rem;
+}
+
+/* =========================
+   RESPONSIVIDADE
+   ========================= */
+
+@media (max-width: 900px) {
+    .topbar {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .nav {
+        order: 3;
+        width: 100%;
+    }
+
+    .grid-4,
+    .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 18px 12px;
+    }
+
+    .grid-4,
+    .grid-3,
+    .grid-2,
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .topbar {
+        padding: 12px;
+    }
+
+    .nav {
+        gap: 8px;
+    }
+}

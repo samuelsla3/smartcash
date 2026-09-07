@@ -1,0 +1,23 @@
+# Checklist para o integrante responsável pela implementação
+
+- [ ] Colocar a pasta em `C:\laragon\www\smartcash`
+- [ ] Conferir o nome do banco em `config/database.php`
+- [ ] Conferir usuário/senha do MySQL
+- [ ] Importar/criar o banco conforme o SQL oficial do projeto
+- [ ] Garantir dados nas tabelas auxiliares de seleção
+- [ ] Criar/usar o módulo `dashboard/index.php` do outro integrante
+- [ ] Testar cadastro
+- [ ] Testar login/logout
+- [ ] Testar duas contas do mesmo usuário
+- [ ] Testar tentativa de acessar ID de conta de outro usuário
+- [ ] Testar recebimento e alteração do saldo
+- [ ] Testar edição de recebimento mudando conta e valor
+- [ ] Testar exclusão de recebimento
+- [ ] Testar despesa por conta
+- [ ] Testar despesa sem saldo suficiente
+- [ ] Testar despesa por cartão
+- [ ] Testar despesa acima do limite
+- [ ] Testar edição/exclusão de despesa
+- [ ] Testar transferência
+- [ ] Testar transferência sem saldo
+- [ ] Confirmar que transferência não aparece como DESPESA

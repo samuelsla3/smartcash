@@ -1,0 +1,21 @@
+# Configurações locais / credenciais
+.env
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Dependências, caso sejam usadas futuramente
+/vendor/
+node_modules/
+
+# Logs
+*.log
+
+# Backups
+*.bak
+*.tmp
