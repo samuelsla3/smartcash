@@ -1,8 +1,6 @@
-# SmartCash — núcleo financeiro
+# SmartCash
 
 ## Escopo
-
-Este pacote implementa o núcleo solicitado:
 
 - cadastro de usuário;
 - login/logout e sessão;
@@ -14,10 +12,6 @@ Este pacote implementa o núcleo solicitado:
 - transferências entre contas;
 - proteção CSRF nos POSTs;
 - controle de propriedade por `id_usuario`.
-
-Não implementa dashboard, relatórios, investimentos, objetivos,
-notificações ou CRUD completo de cartões, pois esses módulos serão
-integrados por outro integrante.
 
 ## Instalação no Laragon
 
@@ -141,8 +135,3 @@ O CRUD de cartões não faz parte deste pacote.
 
 A coluna `DESPESA.data` é referenciada como `` `data` `` nas consultas
 para evitar ambiguidades com palavras reservadas/funções do SQL.
-
-## Dependências de integração
-
-O pacote pressupõe que o banco já tenha sido criado conforme o
-modelo fornecido pelo projeto. Ele não cria nem modifica tabelas.
